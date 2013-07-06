@@ -27,34 +27,34 @@ import qualified B.RuleDatabase as RuleDatabase
 run :: ShakeOptions -> Rules () -> IO ()
 run _ rules = do
   (ruleDatabase, actions) <- runRules rules
-  let ruleDatabase' = RuleDatabase.insert FooR ruleDatabase
-  evalBuildStringPath "build.db" ruleDatabase' (build (FooQ actions))
+  let ruleDatabase' = RuleDatabase.insert RootR ruleDatabase
+  evalBuildStringPath "build.db" ruleDatabase' (build (RootQ actions))
 
-data FooQ = FooQ [Action ()]
+data RootQ = RootQ [Action ()]
   deriving (Typeable)
 
-instance Eq FooQ where
-  FooQ _ == FooQ _ = False
+instance Eq RootQ where
+  RootQ _ == RootQ _ = False
 
-instance Show FooQ where
-  show (FooQ _) = "FooQ"
+instance Show RootQ where
+  show (RootQ _) = "RootQ"
 
-instance Binary FooQ where
+instance Binary RootQ where
   get = do
     () <- Binary.get
-    return $ FooQ []
-  put (FooQ _) = Binary.put ()
+    return $ RootQ []
+  put (RootQ _) = Binary.put ()
 
-instance Question FooQ where
-  type Answer FooQ = ()
-  type AnswerMonad FooQ = IO
-  answer (FooQ _) = return $ Right ()
+instance Question RootQ where
+  type Answer RootQ = ()
+  type AnswerMonad RootQ = IO
+  answer (RootQ _) = return $ Right ()
 
-data FooR = FooR
+data RootR = RootR
   deriving (Typeable)
 
-instance B.Rule FooQ FooR where
-  queryRule (FooQ actions) FooR = [mapM_ toBuildRule actions]
+instance B.Rule RootQ RootR where
+  queryRule (RootQ actions) RootR = [mapM_ toBuildRule actions]
 
-instance Semigroup FooR where
-  FooR <> FooR = FooR
+instance Semigroup RootR where
+  RootR <> RootR = RootR
