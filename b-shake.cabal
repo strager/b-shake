@@ -1,0 +1,83 @@
+name: b-shake
+version: 0.1.0.0
+
+author: Matt "strager" Glazar and Neil Mitchell
+build-type: Simple
+cabal-version: >=1.8
+category: Development
+license-file: LICENSE
+license: BSD3
+maintainer: strager.nds@gmail.com
+synopsis: Shake on top of b
+
+library
+  exposed-modules:
+    B.Shake,
+    B.Shake.Args,
+    B.Shake.Classes,
+    B.Shake.Core,
+    B.Shake.Core.Action,
+    B.Shake.Core.Action.Internal,
+    B.Shake.Core.Log,
+    B.Shake.Core.Rule,
+    B.Shake.Core.Rule.Internal,
+    B.Shake.Core.Rules,
+    B.Shake.Core.Rules.Internal,
+    B.Shake.Core.Run,
+    B.Shake.Derived,
+    B.Shake.Directory,
+    B.Shake.Errors,
+    B.Shake.File,
+    B.Shake.FilePath,
+    B.Shake.FilePattern,
+    B.Shake.FileTime,
+    B.Shake.Files,
+    B.Shake.Locks,
+    B.Shake.Oracle,
+    B.Shake.Progress,
+    B.Shake.Rerun,
+    B.Shake.Shake,
+    B.Shake.Timing,
+    B.Shake.Types
+
+  build-depends:
+    b,
+    base >=4.6.0 && <5,
+    binary,
+    binary-generic,
+    bytestring,
+    containers,
+    deepseq,
+    directory,
+    filepath,
+    hashable,
+    process,
+    semigroups,
+    stm,
+    system-fileio,
+    system-filepath,
+    text-binary,
+    time,
+    transformers,
+    unix,
+    unordered-containers
+
+executable ninja
+  main-is: Main.hs
+  hs-source-dirs: examples/ninja
+
+  build-depends:
+    b-shake,
+    base,
+    binary,
+    bytestring,
+    containers,
+    directory,
+    process,
+    semigroups,
+    stm,
+    system-fileio,
+    system-filepath,
+    text,
+    transformers,
+    unordered-containers
