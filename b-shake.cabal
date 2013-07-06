@@ -10,11 +10,18 @@ license: BSD3
 maintainer: strager.nds@gmail.com
 synopsis: Shake on top of b
 
+flag portable
+  default: False
+  description: Obtain FileTime using portable functions
+
 library
   exposed-modules:
     B.Shake,
-    B.Shake.Args,
     B.Shake.Classes,
+    B.Shake.FilePath
+
+  other-modules:
+    B.Shake.Args,
     B.Shake.Core,
     B.Shake.Core.Action,
     B.Shake.Core.Action.Internal,
@@ -28,7 +35,6 @@ library
     B.Shake.Directory,
     B.Shake.Errors,
     B.Shake.File,
-    B.Shake.FilePath,
     B.Shake.FilePattern,
     B.Shake.FileTime,
     B.Shake.Files,
@@ -38,29 +44,31 @@ library
     B.Shake.Rerun,
     B.Shake.Shake,
     B.Shake.Timing,
-    B.Shake.Types
+    B.Shake.Types,
+    Paths_b_shake
 
   build-depends:
     b,
-    base >=4.6.0 && <5,
+    base ==4.*,
     binary,
-    binary-generic,
     bytestring,
     containers,
-    deepseq,
+    deepseq >=1.1 && <1.4,
     directory,
     filepath,
-    hashable,
-    process,
+    hashable >=1.1.2.3 && <1.3,
+    process >=1.1,
+    random,
     semigroups,
-    stm,
-    system-fileio,
-    system-filepath,
-    text-binary,
     time,
-    transformers,
-    unix,
-    unordered-containers
+    transformers >=0.2 && <0.4,
+    unordered-containers (>=0.1.4.3 && <0.2) || (>=0.2.1 && <0.3)
+
+  if flag(portable)
+    cpp-options: -DPORTABLE
+  else
+    if !os(windows)
+      build-depends: unix >=2.5.1
 
 executable ninja
   main-is: Main.hs
@@ -69,15 +77,7 @@ executable ninja
   build-depends:
     b-shake,
     base,
-    binary,
     bytestring,
-    containers,
     directory,
     process,
-    semigroups,
-    stm,
-    system-fileio,
-    system-filepath,
-    text,
-    transformers,
-    unordered-containers
+    unordered-containers (>=0.1.4.3 && <0.2) || (>=0.2.1 && <0.3)
