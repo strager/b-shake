@@ -13,7 +13,7 @@ import B.Shake.Core.Rule.Internal (Rule, RuleKey(..))
 import qualified B.Build as B
 
 apply :: (Rule key value) => [key] -> Action [value]
-apply keys = Action $ mapM B.need qs
+apply keys = Action $ B.needs qs
   where
   qs = map RuleKey keys
 
