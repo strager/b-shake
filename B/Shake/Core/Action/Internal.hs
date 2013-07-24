@@ -15,4 +15,4 @@ newtype Action a = Action
   deriving (Functor, Applicative, Monad, MonadIO)
 
 runAfter :: IO () -> Action ()
-runAfter = error "Unimplemented: B.Shake.Action.Internal.<>"
+runAfter = error "Unimplemented: B.Shake.Action.Internal.runAfter"
